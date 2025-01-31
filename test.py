@@ -1,4 +1,6 @@
 import flet as ft
+import paul as algo
+import random
 
 TITLE = "Taquin"
 HEIGHT = 350
@@ -28,10 +30,9 @@ class Board:
     def __init__(self, page):
         self.page = page
         self.squares = []
-        self.current_step = 0  # Indice actuel de la séquence
+        self.current_step = 0  
 
     def create_tiles(self, position):
-        """Crée les tuiles à partir d'une liste plate (1D)."""
         self.squares = [
             Tile(number=position[i], line=i//3, column=i%3)
             for i in range(len(position))
@@ -39,23 +40,30 @@ class Board:
         return self.squares
 
     def update(self, e):
-        """Passe à l'état suivant de la séquence et met à jour les tuiles."""
         if self.current_step < len(sequence) - 1:
-            self.current_step += 1  # Aller à l’étape suivante
+            self.current_step += 1  
             new_state = sequence[self.current_step]
 
             for i, tile in enumerate(self.squares):
-                tile.value = str(new_state[i])  # Met à jour l'affichage
+                tile.value = str(new_state[i])  
 
             self.page.update()
 
+    
+    def shuffle(self, e):
+        shuffled = sequence[self.current_step]
+        random.shuffle(shuffled)
+        for i, tile in enumerate(self.squares):
+            tile.number = shuffled[i]
+            tile.value = str(shuffled[i])
+        self.page.update()
+    
 
 def main(page: ft.Page):
     page.title = TITLE
     page.window_height = HEIGHT
     page.window_width = WIDTH
 
-    initial = [1, 4, 6, 0, 5, 9, 8, 3, 2]
 
 
     board = Board(page)
@@ -63,8 +71,8 @@ def main(page: ft.Page):
     grid.controls.extend(board.create_tiles(sequence[0]))  
 
     buttons = ft.Row([
-        ft.IconButton(icon=ft.icons.FIRE_TRUCK, on_click=board.update), 
-        ft.IconButton(icon=ft.icons.LOCK),
+        ft.IconButton(icon=ft.icons.FIRE_TRUCK, on_click = board.update), 
+        ft.IconButton(icon=ft.icons.LOCK, on_click = board.shuffle),
         ft.IconButton(icon=ft.icons.FIRE_EXTINGUISHER), 
         ft.IconButton(icon=ft.icons.BIKE_SCOOTER)],
         alignment=ft.MainAxisAlignment.CENTER)
