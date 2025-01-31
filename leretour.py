@@ -70,23 +70,24 @@ def DFS(matrice):
     dico = {}
     longueur = 0
     dico[board] = [board.moves(), longueur, []]
-    found = False
-    def algorithme(board, dico, longueur):
-        nonlocal found 
-        print(board, longueur)
-        if found:
-            return 
+    def algorithme(board, dico, longueur, found=False):
+        etat = found
         pere = board 
-        if board != fin:
+        print(board, longueur)
+        if etat:
+            return
+        if longueur > 7:
+            return
+        elif board != fin:
             longueur += 1
             dico[board][0].sort()
             for new_board in dico[board][0]:
                 if new_board not in dico :
                     dico[new_board] = [new_board.moves(), longueur, pere]
                     algorithme(new_board, dico, longueur)
-        else :
+        else: 
             dico[fin] = [[], longueur, pere]
-            found = True
+            etat = True
 
     algorithme(board, dico, longueur)
 
@@ -96,8 +97,8 @@ def DFS(matrice):
         solution.append(etape)
         etape = dico[etape][2]
     
-    return len(solution), solution[::-1]
+    return longueur, solution[::-1]
 
-
+#exploration en profondeur n'est pas adapté, il faut faire en largeur ou avec dikjstra sinon on explore toujours le même mouvement
 
 DFS([[1, 2, 3], [4, 5, 6], [7, 0, 8]])
