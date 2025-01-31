@@ -80,7 +80,7 @@ def algorithme(board, dico, longueur):
     pere = board 
     if board != fin :
         longueur += 1
-        dico[board][0] = dico[board][0].sort()
+        #dico[board][0] = dico[board][0].sort()
         for new_board in dico[board][0]:
             dico[new_board] = [new_board.moves(), longueur, pere]
             algorithme(new_board, dico, longueur)
