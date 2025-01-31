@@ -1,9 +1,15 @@
 class Board():
 
     def __init__(self, board):
-        self.board = board
+        if isinstance(board, Board):
+            raise_ValueError('probleme')
+        else:
+            self.board = board
 
     def __eq__(self, other):
+        #print(type(self.board), type(other.board))
+        #for x in self.board:
+         #   print(type(x))
         if isinstance(other, Board):
             return self.board == other.board 
         return False
@@ -53,17 +59,35 @@ class Board():
 
 dico = {}
 matrice = [[1, 0, 2], [3, 4, 5], [6, 7, 8]]
+fin = Board([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
 board = Board(matrice)
 dico[board] = board.moves()
 #print(board)
 #print(dico)
 
 def DFS(matrice):
-    fin = Board([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
     board = Board(matrice)
     dico = {}
     longueur = 0
     dico[board] = [board.moves(), longueur, []]
+    def algorithme(board, dico, longueur, found=False):
+        etat = found
+        pere = board 
+        print(board, longueur)
+        if etat:
+            return
+        if longueur > 7:
+            return
+        elif board != fin:
+            longueur += 1
+            dico[board][0].sort()
+            for new_board in dico[board][0]:
+                if new_board not in dico :
+                    dico[new_board] = [new_board.moves(), longueur, pere]
+                    algorithme(new_board, dico, longueur)
+        else: 
+            dico[fin] = [[], longueur, pere]
+            etat = True
 
     algorithme(board, dico, longueur)
 
@@ -73,18 +97,8 @@ def DFS(matrice):
         solution.append(etape)
         etape = dico[etape][2]
     
-    return len(solution), solution[::-1]
+    return longueur, solution[::-1]
 
-def algorithme(board, dico, longueur):
-    fin = Board([[1, 2, 3], [4, 5, 6], [7, 8, 0]])
-    pere = board 
-    if board != fin :
-        longueur += 1
-        #dico[board][0] = dico[board][0].sort()
-        for new_board in dico[board][0]:
-            dico[new_board] = [new_board.moves(), longueur, pere]
-            algorithme(new_board, dico, longueur)
-    else :
-        dico[fin] = [[], longueur, pere]
+#exploration en profondeur n'est pas adapté, il faut faire en largeur ou avec dikjstra sinon on explore toujours le même mouvement et il faut donc limiter en longueur l'exploration
 
-DFS(matrice)
+DFS([[1, 2, 3], [4, 5, 6], [7, 0, 8]])
