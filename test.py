@@ -1,13 +1,17 @@
 import flet as ft
 
 TITLE = "Taquin"
+HEIGHT = 350
+WIDTH = 250
 
 class Tile(ft.TextField):
     def __init__(self, number: int, line: int, column: int) -> None:
-        super().__init__(value=str(number), read_only=True, text_align=ft.TextAlign.CENTER, width=50)
+        super().__init__(value=str(number), read_only=True, text_align=ft.TextAlign.CENTER, width=100, height=100)
         self._number = number
-        self.line = line  # Ligne entre 0 et 2
-        self.column = column  # Colonne entre 0 et 2
+        self.line = line  
+        self.column = column  
+       
+        
 
     @property
     def number(self) -> int:
@@ -26,26 +30,31 @@ class Board:
 
     def create_tiles(self, position):
         self.squares = [
-            Tile(number=position[i][j], line=i, column=j)
-            for i in range(len(position))
-            for j in range(len(position[i]))
-        ]
+            Tile(number=position[i], line=i//3, column=i%3)
+            for i in range(len(position))]
         return self.squares
 
-    def update(self, board):
-        """Met à jour les valeurs des cases selon le nouvel état du plateau."""
+    def update(self, position):
         for square in self.squares:
-            square.number = board[square.line][square.column]
+            square.number = position[square.line][square.column]
 
 def main(page: ft.Page):
     page.title = TITLE
-    initial = [[1, 4, 6], [0, 5, 7], [8, 3, 2]]
+    initial = [[1, 4, 6], [0, 5, 9], [8, 3, 2]]
 
     board = Board(page)
     grid = ft.GridView(expand=True, runs_count=3, spacing=5, run_spacing=5)
-    grid.controls.extend(board.create_tiles(initial))  # Ajout des cases au GridView
-
-    page.controls.append(grid)  # Ajout du GridView à la page
+    grid.controls.extend(board.create_tiles(initial))  
+      
+    buttons = ft.Row([
+        ft.IconButton(icon = ft.Icons.FIRE_TRUCK), 
+        ft.IconButton(icon = ft.Icons.LOCK),
+        ft.IconButton(icon = ft.Icons.FIRE_EXTINGUISHER), 
+        ft.IconButton(icon = ft.Icons.BIKE_SCOOTER)],
+        alignment=ft.MainAxisAlignment.CENTER)
+    
+    page.controls.append(grid)
+    page.controls.append(buttons)
     page.update()
 
 ft.app(target=main)
