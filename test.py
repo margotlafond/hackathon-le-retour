@@ -39,30 +39,34 @@ class Board:
             for i in range(len(position))]
         return self.squares
 
-    def update(self, position):
-        for square in self.squares:
-            square.number = position[square.line][square.column]
+    def update(self, sequence, i):
+        #for square in self.squares:
+        #    square.number = position[square.line][square.column]
+        #self.create_tiles(sequence[i+1])
+        self.squares = self.create_tiles(sequence[i + 1])
+
+
 
 def main(page: ft.Page):
     page.title = TITLE
     page.window_height = HEIGHT
     page.window_width = WIDTH
 
-
     board = Board(page)
-
     grid = ft.GridView(expand=True, runs_count=3, spacing=5, run_spacing=5)
     grid.controls.extend(board.create_tiles(sequence[0]))  
-      
-    buttons = ft.Row([
-        ft.IconButton(icon = ft.Icons.FIRE_TRUCK, on_click = board.update), 
-        ft.IconButton(icon = ft.Icons.LOCK),
-        ft.IconButton(icon = ft.Icons.FIRE_EXTINGUISHER), 
-        ft.IconButton(icon = ft.Icons.BIKE_SCOOTER)],
-        alignment=ft.MainAxisAlignment.CENTER)
+
+    for i in range(len(sequence)):
+        buttons = ft.Row([
+            ft.IconButton(icon=ft.Icons.FIRE_TRUCK, on_click=lambda e: board.update(sequence, i)), 
+            ft.IconButton(icon = ft.Icons.LOCK),
+            ft.IconButton(icon = ft.Icons.FIRE_EXTINGUISHER), 
+            ft.IconButton(icon = ft.Icons.BIKE_SCOOTER)],
+            alignment=ft.MainAxisAlignment.CENTER)
     
-    page.controls.append(grid)
-    page.controls.append(buttons)
-    page.update()
+        page.controls.append(grid)
+        page.controls.append(buttons)
+        page.update()
+        
 
 ft.app(target=main)
