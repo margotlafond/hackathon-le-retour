@@ -28,7 +28,7 @@ def main(page: ft.Page):
     page.title = TITLE
 
     board = Board(page)
-    ft.Column[]
+    ft.Column[ft.GridView(board.squares)]
     page.update()
 
 ft.app(main)
