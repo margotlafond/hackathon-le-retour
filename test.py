@@ -55,6 +55,9 @@ def main(page: ft.Page):
     page.window_height = HEIGHT
     page.window_width = WIDTH
 
+    initial = [1, 4, 6, 0, 5, 9, 8, 3, 2]
+
+
     board = Board(page)
     grid = ft.GridView(expand=True, runs_count=3, spacing=5, run_spacing=5)
     grid.controls.extend(board.create_tiles(sequence[0]))  
