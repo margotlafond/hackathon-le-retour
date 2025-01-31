@@ -51,8 +51,22 @@ dico = {}
 matrice = [[1, None, 2], [3, 4, 5], [6, 7, 8]]
 board = Board(matrice)
 dico[board] = board.moves()
-print(board)
-print(dico)
+#print(board)
+#print(dico)
+
+def DFS(matrice):
+    board = Board(matrice)
+    dico = {}
+    longueur = 0
+
+    algorithme(board, dico, longueur)
+
+def algorithme(board, dico, longueur):
+    fin = Board([[1, 2, 3], [4, 5, 6], [7, 8, None]])
+    if board != fin 
+    longueur += 1
+    dico[board] = [board.moves(), longueur]
+    algorithme(dico, longueur)
 
 class Tuile():
     pass

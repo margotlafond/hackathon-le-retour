@@ -39,7 +39,7 @@ class Board:
 
 def main(page: ft.Page):
     page.title = TITLE
-    initial = [[1, 4, 6], [0, 5, 9], [8, 3, 2]]
+    initial = [[1, 4, 6], [0, 5, 7], [8, 3, 2]]
 
     board = Board(page)
     grid = ft.GridView(expand=True, runs_count=3, spacing=5, run_spacing=5)
