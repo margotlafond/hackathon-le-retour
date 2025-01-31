@@ -36,7 +36,45 @@ class Board:
                 mouvements.append(Board(new_grid))
         return mouvements
 
+finale = Board([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+])
 
+def dijkstra(start_state, target_state = finale):
+
+    frontier = [(0, start_state)]
+    costs = {start_state: 0}
+    previous = {start_state: None}
+    visited = set()
+    
+    while frontier:
+        frontier.sort()
+        current_cost, current_state = frontier.pop(0)
+        
+        if current_state == target_state:
+            path = []
+            while current_state:
+                path.append(current_state)
+                current_state = previous[current_state]
+            return path[::-1]
+        
+        if current_state in visited:
+            continue
+        visited.add(current_state)
+        
+        for neighbor in current_state.moves():
+            if neighbor in visited:
+                continue
+            new_cost = current_cost + 1
+            
+            if neighbor not in costs or new_cost < costs[neighbor]:
+                costs[neighbor] = new_cost
+                previous[neighbor] = current_state
+                frontier.append((new_cost, neighbor))
+    
+    return None
 
 
 
