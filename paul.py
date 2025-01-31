@@ -1,3 +1,6 @@
+import heapq
+
+
 class Board:
     def __init__(self, grid):
         self.grid = grid
@@ -48,7 +51,7 @@ begin = Board([
     [1, 6, 0]
 ])
 
-def dijkstra(start_state, target_state=finale):
+def dijkstra_lent(start_state, target_state=finale):
 
     frontier = [(0, start_state)]
     costs = {start_state: 0}
@@ -82,11 +85,7 @@ def dijkstra(start_state, target_state=finale):
     return False
 
 
-import heapq
-
-
-
-def dijkstra2(start_state, target_state=finale):
+def dijkstra(start_state, target_state=finale):
     frontier = []
     heapq.heappush(frontier, (0, start_state))
     costs = {start_state: 0}
@@ -121,5 +120,3 @@ def dijkstra2(start_state, target_state=finale):
                 heapq.heappush(frontier, (new_cost, neighbor))
 
     return None
-
-
