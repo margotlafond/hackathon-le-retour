@@ -101,6 +101,9 @@ def dijkstra2(start_state, target_state=finale):
             while current_state:
                 path.append(current_state)
                 current_state = previous[current_state]
+            for i in range(len(path)):
+                path[i] = path[i].grid
+                path[i] = path[i][0] + path[i][1] + path[i][2]
             return len(path), path[::-1]
 
         if current_state in visited:
