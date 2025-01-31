@@ -1,3 +1,6 @@
+import heapq
+
+
 class Board:
     def __init__(self, grid):
         self.grid = grid
@@ -48,7 +51,7 @@ begin = Board([
     [1, 6, 0]
 ])
 
-def dijkstra(start_state, target_state=finale):
+def dijkstra_lent(start_state, target_state=finale):
 
     frontier = [(0, start_state)]
     costs = {start_state: 0}
@@ -82,11 +85,7 @@ def dijkstra(start_state, target_state=finale):
     return False
 
 
-import heapq
-
-
-
-def dijkstra2(start_state, target_state=finale):
+def dijkstra(start_state, target_state=finale):
     frontier = []
     heapq.heappush(frontier, (0, start_state))
     costs = {start_state: 0}
@@ -101,6 +100,9 @@ def dijkstra2(start_state, target_state=finale):
             while current_state:
                 path.append(current_state)
                 current_state = previous[current_state]
+            for i in range(len(path)):
+                path[i] = path[i].grid
+                path[i] = path[i][0] + path[i][1] + path[i][2]
             return len(path), path[::-1]
 
         if current_state in visited:
@@ -118,5 +120,3 @@ def dijkstra2(start_state, target_state=finale):
                 heapq.heappush(frontier, (new_cost, neighbor))
 
     return None
-
-
