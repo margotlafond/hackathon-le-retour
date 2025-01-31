@@ -99,6 +99,6 @@ def DFS(matrice):
     
     return longueur, solution[::-1]
 
-#exploration en profondeur n'est pas adapté, il faut faire en largeur ou avec dikjstra sinon on explore toujours le même mouvement
+#exploration en profondeur n'est pas adapté, il faut faire en largeur ou avec dikjstra sinon on explore toujours le même mouvement et il faut donc limiter en longueur l'exploration
 
 DFS([[1, 2, 3], [4, 5, 6], [7, 0, 8]])
